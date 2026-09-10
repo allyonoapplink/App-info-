@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+<title>Yono Games App Info — All Website Admin Control Only</title>
+<style>
+:root{--bg:#f4f7fb;--card:#fff;--text:#172033;--muted:#667085;--border:#dfe6f0;--blue:#2563eb;--blue2:#1d4ed8;--cyan:#06b6d4;--green:#16a34a;--red:#dc2626;--soft:#eff6ff;--shadow:0 12px 34px rgba(15,23,42,.08);--r:18px}
+*{box-sizing:border-box}html{font-size:16px}body{margin:0;background:linear-gradient(180deg,#f9fbff 0%,#eef3f9 100%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;overflow-x:hidden}.wrap{width:min(820px,100%);margin:auto;padding:12px 12px 55px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 16px;margin-bottom:12px;background:#fff;border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow)}.brand{min-width:0;display:flex;align-items:center;gap:10px;white-space:nowrap}.brand-mark{width:40px;height:40px;flex:0 0 40px;border-radius:13px;display:grid;place-items:center;color:#fff;font-weight:900;background:linear-gradient(135deg,#2563eb,#06b6d4);box-shadow:0 7px 16px rgba(37,99,235,.22)}.brand-copy{min-width:0}.brand-title{font-size:16px;font-weight:850;line-height:1.1;overflow:hidden;text-overflow:ellipsis}.brand-sub{font-size:10.5px;color:var(--muted);font-weight:700;margin-top:3px;overflow:hidden;text-overflow:ellipsis}.credit{white-space:nowrap;font-size:11px;font-weight:850;color:#344054;background:#f5f8fc;border:1px solid var(--border);padding:8px 11px;border-radius:999px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:17px;margin-bottom:12px;box-shadow:var(--shadow)}.section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.section-head h2{font-size:15px;margin:0;font-weight:850}.badge{font-size:9.5px;font-weight:900;letter-spacing:.35px;color:#1d4ed8;background:var(--soft);padding:5px 8px;border-radius:999px;border:1px solid #dbeafe;white-space:nowrap}
+label{display:block;font-size:11.5px;font-weight:850;color:#475467;margin:10px 0 5px}input,textarea{font:inherit;width:100%;border:1px solid var(--border);border-radius:11px;padding:11px 12px;background:#fff;color:var(--text);font-size:14px}input:focus,textarea:focus{outline:2px solid #bfdbfe;outline-offset:1px;border-color:#60a5fa}input:disabled,textarea:disabled{background:#f7f9fc;color:#667085;cursor:not-allowed}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.token-row{display:flex;align-items:center;gap:8px}.token-row input{flex:1}.btn{font:inherit;cursor:pointer;border:1px solid var(--border);border-radius:11px;padding:11px 13px;font-size:13px;font-weight:850;background:#fff;color:#344054}.btn:hover{background:#f8fafc}.btn-primary{border:none;background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff;box-shadow:0 7px 16px rgba(37,99,235,.18)}.btn-primary:active{transform:scale(.985)}.btn-primary:disabled{opacity:.55;cursor:not-allowed}.full{width:100%;margin-top:13px}.save-line{display:flex;gap:9px;margin-top:13px}.save-line .btn{flex:1}.save-line .edit-btn{display:none}.status{display:none;margin-top:10px;padding:10px 12px;border-radius:11px;font-size:12.5px;line-height:1.5;font-weight:650}.status.show{display:block}.status.ok{background:#dcfce7;color:#166534;border:1px solid #bbf7d0}.status.err{background:#fee2e2;color:#991b1b;border:1px solid #fecaca}.status.info{background:#dbeafe;color:#1e40af;border:1px solid #bfdbfe}.hint{font-size:10.5px;color:var(--muted);line-height:1.55;margin:8px 0 0}.example{font-size:10px;color:#64748b;margin-top:5px}.locked-card{opacity:.96}.locked-card .section-head .badge{color:#166534;background:#ecfdf3;border-color:#bbf7d0}
+.tags-help{margin-top:9px;padding:11px 12px;border-radius:12px;background:linear-gradient(135deg,#f8fbff,#f2f8ff);border:1px solid #dbeafe}.tags-help strong{display:block;font-size:11px;margin-bottom:4px}.tags-help p{margin:0;color:var(--muted);font-size:10.5px;line-height:1.55}.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.chip{font-size:9.5px;font-weight:800;color:#155e75;background:#ecfeff;border:1px solid #a5f3fc;border-radius:999px;padding:5px 8px}
+.list{margin-top:11px;border:1px solid var(--border);border-radius:13px;overflow:hidden;max-height:430px;overflow-y:auto}.list-row{display:flex;align-items:center;gap:9px;padding:9px 10px;border-bottom:1px solid var(--border);background:#fff}.list-row:last-child{border-bottom:none}.list-row img{width:38px;height:38px;border-radius:9px;object-fit:cover;background:#eef2f7;border:1px solid var(--border);flex:0 0 38px}.list-main{min-width:0;flex:1}.list-name{font-size:12.5px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.list-meta{font-size:9.5px;color:var(--muted);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.list-id{font-size:9px;color:var(--muted);flex:0 0 auto}.list-actions{display:flex;gap:3px;flex:0 0 auto}.list-actions button{border:0;background:none;padding:6px 5px;font-size:10.5px;font-weight:850;cursor:pointer}.edit{color:var(--blue)}.del{color:var(--red)}.hidden{display:none!important}.divider{height:1px;background:var(--border);margin:14px 0}
+.notice{display:flex;gap:9px;align-items:flex-start;padding:10px 11px;border:1px solid #e2e8f0;background:#f8fafc;border-radius:12px;font-size:10.5px;color:#475467;line-height:1.5}.notice b{color:#1f2937}.cooldown{font-variant-numeric:tabular-nums;font-weight:900}.footer-note{text-align:center;color:#98a2b3;font-size:9.5px;margin-top:8px}
+
+/* ===== Unlock transition ===== */
+#passwordCard{transform-origin:top center;transition:opacity .42s ease,transform .42s ease,max-height .55s ease,margin .42s ease,padding .42s ease;max-height:520px;overflow:hidden}
+#passwordCard.unlocking{opacity:0;transform:translateY(-18px) scale(.98);max-height:0;margin-bottom:0;padding-top:0;padding-bottom:0;pointer-events:none}
+#adminArea{opacity:0;transform:translateY(22px);transition:opacity .48s ease .12s,transform .48s cubic-bezier(.22,1,.36,1)}
+#adminArea.revealed{opacity:1;transform:translateY(0)}
+.unlock-banner{display:none;margin-bottom:12px;padding:12px 14px;border-radius:16px;background:linear-gradient(135deg,#ecfdf3,#f0fdf4);border:1px solid #bbf7d0;color:#166534;font-size:13px;font-weight:850;box-shadow:0 8px 22px rgba(22,163,74,.08)}
+.unlock-banner.show{display:block;animation:unlockPop .5s ease both}
+@keyframes unlockPop{0%{opacity:0;transform:translateY(-8px) scale(.98)}100%{opacity:1;transform:translateY(0) scale(1)}}
+.connection-auto{margin-top:10px;font-size:10.5px;color:#166534;font-weight:750}
+@media(max-width:600px){.wrap{padding:8px 8px 45px}.topbar{padding:11px 12px;border-radius:17px}.brand{gap:8px}.brand-mark{width:35px;height:35px;flex-basis:35px;border-radius:11px}.brand-title{font-size:14px}.brand-sub{font-size:9px}.credit{font-size:9px;padding:7px 8px}.row{grid-template-columns:1fr}.card{padding:14px;border-radius:16px}.save-line{flex-direction:row}.list-row{padding:8px}.list-row img{width:34px;height:34px;flex-basis:34px}.list-actions button{padding:6px 3px}}
+@media(max-width:390px){.topbar{gap:7px}.credit{font-size:8px;padding:6px}.brand-title{font-size:12.5px}.brand-sub{font-size:8px}.brand-mark{display:none}.save-line{gap:6px}.save-line .btn{padding:10px 8px;font-size:11px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">YG</div>
+      <div class="brand-copy"><div class="brand-title">Yono Games App Info</div><div class="brand-sub">All Website • Admin Control Only</div></div>
+    </div>
+    <div class="credit">Credit: Baharul</div>
+  </header>
+
+  <section class="card" id="passwordCard">
+    <div class="section-head"><h2>Name Design</h2><span class="badge">ADMIN ACCESS</span></div>
+    <label for="adminPassword">Enter your password</label>
+    <input id="adminPassword" type="password" inputmode="numeric" autocomplete="off" placeholder="Enter your password">
+    <div class="example">Example: enter your admin password here</div>
+    <button class="btn btn-primary full" id="passwordSaveBtn">Save &amp; Unlock</button>
+    <div class="status" id="passwordStatus"></div>
+    <p class="hint">Wrong password stays locked. After 4 incorrect save attempts, a 1-minute limit starts automatically.</p>
+  </section>
+
+  <div class="unlock-banner" id="unlockBanner">✓ Admin access unlocked • All controls are now available</div>
+
+  <main id="adminArea" class="hidden">
+    <section class="card locked-card">
+      <div class="section-head"><h2>Connect to GitHub</h2><span class="badge" id="connectionBadge">EDITABLE</span></div>
+      <div class="row">
+        <div><label for="ghOwner">GitHub username / organization</label><input id="ghOwner" type="text" value="allyonoapplink" placeholder="Your GitHub username"></div>
+        <div><label for="ghRepo">Repository name</label><input id="ghRepo" type="text" value="Penel-combo-" placeholder="My games site"></div>
+      </div>
+      <div class="row">
+        <div><label for="ghBranch">Branch</label><input id="ghBranch" type="text" value="main"></div>
+        <div><label for="ghPath">apps.json path</label><input id="ghPath" type="text" value="apps.json"></div>
+      </div>
+      <label for="ghToken">Personal Access Token</label>
+      <div class="token-row"><input id="ghToken" type="password" autocomplete="off" placeholder="Personal Access Token"><button class="btn" type="button" id="tokenToggle">Show</button></div>
+      <div class="save-line"><button class="btn btn-primary" id="connectionSaveBtn">Save Connection</button><button class="btn edit-btn" id="connectionEditBtn">Edit</button></div>
+      <div class="status" id="loadStatus"></div>
+      <div class="notice"><b>Fixed:</b><span>After Save Connection, all GitHub fields stay locked in this browser. Use Edit only when you need to change the saved connection; Save Connection locks them again.</span></div>
+    </section>
+
+    <section class="card">
+      <div class="section-head"><h2>App Name / Design</h2><span class="badge">ADD • EDIT</span></div>
+      <label for="newImage">Image URL</label><input id="newImage" type="url" placeholder="https://...">
+      <label for="newName">Image Name</label><input id="newName" type="text" placeholder="Example: YONO GAMES">
+      <label for="newLink">App URL</label><input id="newLink" type="url" placeholder="https://...">
+      <label for="newTags">Tags / Best Information</label>
+      <textarea id="newTags" placeholder="Example: YONO GAMES, New Game, Fast Install, Gaming App"></textarea>
+      <div class="tags-help"><strong>Tags kaise add/edit kare</strong><p>Har tag ko comma (,) se alag karo. Edit par existing tags load honge; badal kar Update karo. Isse har app ke liye unique tag set rakh sakte ho.</p><div class="chips"><span class="chip">New Game</span><span class="chip">Fast Install</span><span class="chip">Official Link</span><span class="chip">Mobile Friendly</span></div></div>
+      <button class="btn btn-primary full" id="addBtn">Save App</button>
+      <button class="btn full hidden" id="cancelEditBtn" type="button">Cancel Edit</button>
+      <div class="status" id="addStatus"></div>
+    </section>
+
+    <section class="card">
+      <div class="section-head"><h2>Current Apps (<span id="countLabel">0</span>)</h2><span class="badge">LIVE DATA</span></div>
+      <button class="btn btn-primary full" id="loadBtn">Load Current Apps</button>
+      <div class="list" id="appList"></div>
+    </section>
+  </main>
+  <div class="footer-note">Yono Games App Info • Admin Control Only • Baharul</div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+let currentList=[];let currentSha=null;let editingId=null;
+const ADMIN_PASSWORD='9127086380';
+
+function showStatus(el,msg,type){el.textContent=msg;el.className='status show '+type}
+function cleanOwnerInput(raw){let v=raw.trim().replace(/^https?:\/\//i,'');let m=v.match(/^([a-zA-Z0-9-]+)\.github\.io/i);if(m)return m[1];m=v.match(/^(?:www\.)?github\.com\/([a-zA-Z0-9-]+)/i);if(m)return m[1];return v.split('/')[0]}
+function extractImageUrl(raw){let v=raw.trim();let m=v.match(/<img[^>]+src=["']([^"']+)["']/i);if(m)return m[1];m=v.match(/!\[[^\]]*\]\(([^)]+)\)/);if(m)return m[1];m=v.match(/<a[^>]+href=["']([^"']+)["']/i);if(m)return m[1];return v}
+function extractPlainUrl(raw){let v=raw.trim();let m=v.match(/<a[^>]+href=["']([^"']+)["']/i);if(m)return m[1];m=v.match(/href=["']([^"']+)["']/i);if(m)return m[1];return v}
+function b64EncodeUnicode(str){return btoa(unescape(encodeURIComponent(str)))}
+function b64DecodeUnicode(str){return decodeURIComponent(escape(atob(str)))}
+function apiUrl(){const owner=cleanOwnerInput($('ghOwner').value),repo=$('ghRepo').value.trim().replace(/^\/+|\/+$/g,''),path=$('ghPath').value.trim().replace(/^\/+/, '');return `https://api.github.com/repos/${owner}/${repo}/contents/${path}`}
+function authHeaders(){return {'Authorization':'Bearer '+$('ghToken').value.trim(),'Accept':'application/vnd.github+json'}}
+function friendlyGitHubError(msg){if(/403|not accessible by (personal access token|integration)/i.test(msg))return 'GitHub rejected the save. Check that this token has access to this exact repository and Contents: Read and write permission.';if(/404|Not Found/i.test(msg))return 'GitHub could not find that repository/path. Check username, repository name, branch and apps.json path.';if(/Bad credentials/i.test(msg))return 'Personal Access Token was rejected by GitHub. Check that the token is valid and not expired.';return 'Failed to save: '+msg}
+
+['ghOwner','ghRepo','ghBranch','ghPath'].forEach(id=>{const v=localStorage.getItem('admin_'+id);if(v!==null)$(id).value=v});const savedToken=localStorage.getItem('admin_ghToken');if(savedToken!==null)$('ghToken').value=savedToken;
+let connectionLocked=localStorage.getItem('admin_connection_locked')==='1';
+function setConnectionLocked(locked){connectionLocked=locked;['ghOwner','ghRepo','ghBranch','ghPath','ghToken'].forEach(id=>$(id).disabled=locked);$('connectionSaveBtn').style.display=locked?'none':'block';$('connectionEditBtn').style.display=locked?'block':'none';$('connectionBadge').textContent=locked?'LOCKED':'EDITABLE';if(locked)localStorage.setItem('admin_connection_locked','1');else localStorage.removeItem('admin_connection_locked')}
+$('ghOwner').addEventListener('blur',()=>{$('ghOwner').value=cleanOwnerInput($('ghOwner').value)});
+$('tokenToggle').addEventListener('click',()=>{const e=$('ghToken');e.type=e.type==='password'?'text':'password';$('tokenToggle').textContent=e.type==='password'?'Show':'Hide'});
+$('connectionSaveBtn').addEventListener('click',async()=>{ $('ghOwner').value=cleanOwnerInput($('ghOwner').value);if(!$('ghOwner').value||!$('ghRepo').value.trim()||!$('ghBranch').value.trim()||!$('ghPath').value.trim()||!$('ghToken').value.trim()){showStatus($('loadStatus'),'Please fill all GitHub connection fields before saving.','err');return}['ghOwner','ghRepo','ghBranch','ghPath'].forEach(id=>localStorage.setItem('admin_'+id,$(id).value.trim()));localStorage.setItem('admin_ghToken',$('ghToken').value.trim());setConnectionLocked(true);showStatus($('loadStatus'),'Connection saved successfully and locked. Loading the original apps.json data…','ok');await loadApps()});
+$('connectionEditBtn').addEventListener('click',()=>{setConnectionLocked(false);showStatus($('loadStatus'),'Edit mode opened. Change the connection and press Save Connection to lock it again.','info')});
+
+async function loadApps(){const status=$('loadStatus');showStatus(status,'Loading apps.json from GitHub…','info');$('loadBtn').disabled=true;try{const branch=$('ghBranch').value.trim()||'main';const res=await fetch(apiUrl()+'?ref='+encodeURIComponent(branch),{headers:authHeaders()});if(res.status===404){currentList=[];currentSha=null;showStatus(status,'apps.json was not found. Create/upload apps.json first, then Load Current Apps again.','info')}else if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.message||('GitHub error '+res.status))}else{const data=await res.json();currentSha=data.sha;const parsed=JSON.parse(b64DecodeUnicode(data.content));if(!Array.isArray(parsed))throw new Error('apps.json must contain an array of apps.');currentList=parsed;showStatus(status,`Loaded ${currentList.length} apps successfully.`,'ok')}renderList()}catch(e){showStatus(status,friendlyGitHubError(e.message),'err')}$('loadBtn').disabled=false}
+function renderList(){ $('countLabel').textContent=currentList.length;const el=$('appList');el.innerHTML=currentList.map(a=>`<div class="list-row"><img src="${String(a.image||'').replace(/"/g,'&quot;')}" onerror="this.style.visibility='hidden'"><div class="list-main"><div class="list-name">${escapeHtml(a.name||'Unnamed App')}</div><div class="list-meta">${escapeHtml(Array.isArray(a.tags)?a.tags.join(', '):(a.tags||'No tags'))}</div></div><span class="list-id">#${a.id??''}</span><div class="list-actions"><button class="edit" data-id="${Number(a.id)}">Edit</button><button class="del" data-id="${Number(a.id)}">Remove</button></div></div>`).join('');el.querySelectorAll('.edit').forEach(b=>b.addEventListener('click',()=>startEdit(Number(b.dataset.id))));el.querySelectorAll('.del').forEach(b=>b.addEventListener('click',()=>removeApp(Number(b.dataset.id))))}
+function escapeHtml(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
+function startEdit(id){const app=currentList.find(a=>Number(a.id)===id);if(!app)return;editingId=id;$('newImage').value=app.image||'';$('newName').value=app.name||'';$('newLink').value=app.link||'';$('newTags').value=Array.isArray(app.tags)?app.tags.join(', '):(app.tags||'');$('addBtn').textContent='Update App';$('cancelEditBtn').classList.remove('hidden');$('newName').scrollIntoView({behavior:'smooth',block:'center'})}
+function cancelEdit(){editingId=null;$('newImage').value='';$('newName').value='';$('newLink').value='';$('newTags').value='';$('addBtn').textContent='Save App';$('cancelEditBtn').classList.add('hidden')}
+async function saveToGitHub(commitMessage){const branch=$('ghBranch').value.trim()||'main';const body={message:commitMessage,content:b64EncodeUnicode(JSON.stringify(currentList,null,2)),branch};if(currentSha)body.sha=currentSha;const res=await fetch(apiUrl(),{method:'PUT',headers:{...authHeaders(),'Content-Type':'application/json'},body:JSON.stringify(body)});if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.message||('GitHub error '+res.status))}const data=await res.json();currentSha=data.content.sha}
+async function addApp(){const status=$('addStatus');const image=extractImageUrl($('newImage').value),name=$('newName').value.trim(),link=extractPlainUrl($('newLink').value),tags=$('newTags').value.split(',').map(x=>x.trim()).filter(Boolean);$('newImage').value=image;$('newLink').value=link;if(!image||!name||!link){showStatus(status,'Please fill Image URL, Image Name and App URL.','err');return}if(!/^https?:\/\//i.test(image)||!/^https?:\/\//i.test(link)){showStatus(status,'Image URL and App URL must start with http:// or https://.','err');return}$('addBtn').disabled=true;showStatus(status,'Saving to GitHub…','info');try{if(editingId!==null){const idx=currentList.findIndex(a=>Number(a.id)===editingId);if(idx<0)throw new Error('App not found. Load Current Apps again.');const before={...currentList[idx]};currentList[idx]={...currentList[idx],name,image,link,tags};try{await saveToGitHub('Update app: '+name)}catch(e){currentList[idx]=before;throw e}showStatus(status,`“${name}” updated successfully.`,'ok');cancelEdit()}else{const nextId=currentList.length?Math.max(...currentList.map(a=>Number(a.id)||0))+1:1;currentList.push({id:nextId,name,image,link,tags});try{await saveToGitHub('Add app: '+name)}catch(e){currentList.pop();throw e}showStatus(status,`“${name}” added successfully.`,'ok');$('newImage').value='';$('newName').value='';$('newLink').value='';$('newTags').value=''}renderList()}catch(e){showStatus(status,friendlyGitHubError(e.message),'err')}$('addBtn').disabled=false}
+async function removeApp(id){if(!confirm('Remove this app from apps.json?'))return;const removed=currentList.find(a=>Number(a.id)===id),old=[...currentList];currentList=currentList.filter(a=>Number(a.id)!==id);try{await saveToGitHub('Remove app: '+(removed?.name||id));renderList();showStatus($('loadStatus'),'App removed successfully from apps.json.','ok')}catch(e){currentList=old;renderList();showStatus($('loadStatus'),friendlyGitHubError(e.message),'err')}}
+$('loadBtn').addEventListener('click',loadApps);$('addBtn').addEventListener('click',addApp);$('cancelEditBtn').addEventListener('click',cancelEdit);setConnectionLocked(connectionLocked);
+
+let failedAttempts=Number(localStorage.getItem('admin_failed_attempts')||0),lockedUntil=Number(localStorage.getItem('admin_locked_until')||0);
+function updatePasswordLock(){const now=Date.now();if(lockedUntil&&now>=lockedUntil){lockedUntil=0;failedAttempts=0;localStorage.removeItem('admin_locked_until');localStorage.removeItem('admin_failed_attempts')}const locked=lockedUntil>now;$('adminPassword').disabled=locked;$('passwordSaveBtn').disabled=locked;if(locked){const sec=Math.ceil((lockedUntil-now)/1000);showStatus($('passwordStatus'),`Too many incorrect attempts. 1-minute limit active. Try again in ${sec} seconds.`,'err')}return locked}
+function unlockAdmin(){$('adminArea').classList.remove('hidden');requestAnimationFrame(()=>{$('passwordCard').classList.add('unlocking');$('adminArea').classList.add('revealed');$('unlockBanner').classList.add('show')});$('adminPassword').value='';showStatus($('passwordStatus'),'Password successful — all admin options are unlocked.','ok');setTimeout(()=>{$('passwordCard').style.display='none'},650)}
+$('passwordSaveBtn').addEventListener('click',()=>{if(updatePasswordLock())return;const value=$('adminPassword').value.trim();if(value===ADMIN_PASSWORD){failedAttempts=0;localStorage.removeItem('admin_failed_attempts');unlockAdmin();return}failedAttempts++;localStorage.setItem('admin_failed_attempts',String(failedAttempts));if(failedAttempts>=4){lockedUntil=Date.now()+60000;localStorage.setItem('admin_locked_until',String(lockedUntil));showStatus($('passwordStatus'),'Password incorrect. 1-minute limit time is now active.','err');updatePasswordLock()}else showStatus($('passwordStatus'),`Password incorrect. Attempt ${failedAttempts}/4. No admin option was unlocked.`,'err')});
+$('adminPassword').addEventListener('keydown',e=>{if(e.key==='Enter')$('passwordSaveBtn').click()});
+updatePasswordLock();
+setInterval(()=>{if(lockedUntil)updatePasswordLock()},1000);
+</script>
+</body>
+</html>
