@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Private Admin Panel</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--text:#111827;--muted:#667085;--line:#e4e7ec;--gold:#d99a22;--gold2:#f2c45d;--blue:#2563eb;--green:#16a34a;--red:#dc2626;--shadow:0 12px 35px rgba(15,23,42,.08)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Segoe UI,system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+button,input{font:inherit}
+button{cursor:pointer}
+.wrap{max-width:900px;margin:auto;padding:18px 14px 60px}
+.top{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow);margin-bottom:14px}
+.title{font-size:21px;font-weight:850}.sub{font-size:12px;color:var(--muted);margin-top:5px}
+.private{display:inline-block;margin-top:10px;padding:6px 10px;border-radius:999px;background:#f8f1df;color:#8a5b00;font-size:11px;font-weight:800}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px;box-shadow:0 6px 22px rgba(15,23,42,.04)}
+h2{font-size:15px;margin-bottom:12px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label{display:block;font-size:12px;font-weight:750;color:#475467;margin:10px 0 5px}
+input{width:100%;border:1px solid #d0d5dd;border-radius:10px;padding:11px 12px;background:#fff;color:#101828;font-size:14px}
+input:focus{outline:2px solid rgba(37,99,235,.18);border-color:var(--blue)}
+.tokenbox{display:flex;gap:7px}.tokenbox input{flex:1}.smallbtn{width:auto!important;min-width:74px}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}
+.btn{border:0;border-radius:10px;padding:11px 14px;font-size:13px;font-weight:800}
+.primary{background:var(--blue);color:#fff}.secondary{background:#eef2f6;color:#344054}.danger{background:#fee2e2;color:#b42318}.green{background:#dcfce7;color:#166534}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.status{display:none;margin-top:11px;padding:10px 12px;border-radius:10px;font-size:12px;font-weight:700;line-height:1.45}
+.status.show{display:block}.ok{background:#dcfce7;color:#166534}.err{background:#fee2e2;color:#991b1b}.info{background:#eaf2ff;color:#1d4ed8}
+.locked{opacity:.55;pointer-events:none;filter:saturate(.65)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+.stat{border:1px solid var(--line);border-radius:12px;padding:12px;background:#fbfcfe}
+.stat b{display:block;font-size:21px}.stat span{font-size:10px;color:var(--muted)}
+.appform{display:grid;grid-template-columns:1fr 1fr;gap:10px}.full{grid-column:1/-1}
+.preview{margin-top:9px;border:1px dashed #cfd5df;border-radius:11px;padding:9px;display:flex;align-items:center;gap:9px;min-height:55px}
+.preview img{width:46px;height:46px;border-radius:9px;object-fit:cover;background:#eef1f5;display:none}
+.preview .initial{width:46px;height:46px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:#eef1f5;color:#667085;font-size:14px;font-weight:850}
+.previewtext{font-size:11px;color:var(--muted)}
+.list{display:flex;flex-direction:column;gap:7px;max-height:480px;overflow:auto}
+.item{display:grid;grid-template-columns:46px 1fr auto;gap:9px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:8px}
+.thumb{width:46px;height:46px;border-radius:9px;object-fit:cover;background:#eef1f5}
+.fallback{display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:850;color:#667085}
+.name{font-size:13px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.meta{font-size:10px;color:var(--muted);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.actions{display:flex;gap:5px}.actions button{border:0;border-radius:8px;padding:7px 9px;font-size:11px;font-weight:800}.edit{background:#eef2ff;color:#4338ca}.remove{background:#fee2e2;color:#b42318}
+.activity{display:flex;flex-direction:column;gap:8px;max-height:390px;overflow:auto}.event{border:1px solid var(--line);border-left:4px solid #94a3b8;border-radius:10px;padding:9px 10px;background:#fff}.event.add{border-left-color:var(--green)}.event.remove{border-left-color:var(--red)}.event.edit{border-left-color:var(--blue)}
+.eventtop{display:flex;justify-content:space-between;gap:8px;font-size:12px;font-weight:800}.eventtime{font-size:10px;color:var(--muted);font-weight:600}.eventbody{font-size:11px;color:#475467;margin-top:4px;line-height:1.45}
+.code{width:100%;min-height:220px;border:1px solid #1f2937;border-radius:11px;background:#0b1020;color:#e5e7eb;padding:12px;font:11px/1.5 Consolas,monospace;resize:vertical}
+.note{font-size:11px;color:var(--muted);line-height:1.5;margin-top:8px}
+.hidden{display:none!important}
+@media(max-width:700px){.grid,.appform{grid-template-columns:1fr}.full{grid-column:auto}.stats{grid-template-columns:1fr 1fr}.item{grid-template-columns:42px 1fr}.actions{grid-column:2}.thumb{width:42px;height:42px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="title">Private Admin Panel</div>
+    <div class="sub">Owner control for the live GitHub Pages website</div>
+    <span class="private">PRIVATE OWNER CONTROL</span>
+  </header>
+
+  <section class="card" id="connectCard">
+    <h2>1. GitHub Connection</h2>
+    <div class="grid">
+      <div><label>GitHub username / organization</label><input id="owner" placeholder="allyonoapplink"></div>
+      <div><label>GitHub repository name</label><input id="repo" placeholder="Penel-combo-"></div>
+      <div><label>Branch</label><input id="branch" value="main"></div>
+      <div><label>index.html path</label><input id="indexPath" value="index.html"></div>
+    </div>
+    <label>GITHUB_TOKEN / Personal Access Token</label>
+    <div class="tokenbox"><input id="token" type="password" placeholder="Paste your GitHub token"><button class="btn secondary smallbtn" id="showToken">Show</button></div>
+    <div class="note">Token is kept only in this browser's local storage. It is sent directly to GitHub API for your repository. Use a fine-grained token restricted to this exact repository with Contents: Read and write.</div>
+    <div class="btnrow"><button class="btn primary" id="connect">Save &amp; Connect</button><button class="btn secondary" id="disconnect">Clear Local Connection</button></div>
+    <div class="status" id="connectStatus"></div>
+  </section>
+
+  <main id="dashboard" class="locked">
+    <section class="card">
+      <h2>2. Live Website Stats</h2>
+      <div class="stats">
+        <div class="stat"><b id="total">0</b><span>Total apps live</span></div>
+        <div class="stat"><b id="added">0</b><span>Apps added</span></div>
+        <div class="stat"><b id="edited">0</b><span>Apps edited</span></div>
+        <div class="stat"><b id="removed">0</b><span>Apps removed</span></div>
+      </div>
+      <div class="btnrow"><button class="btn secondary" id="refresh">Refresh Live Data</button></div>
+      <div class="status" id="dataStatus"></div>
+    </section>
+
+    <section class="card">
+      <h2 id="formTitle">3. Add App</h2>
+      <div class="appform">
+        <div class="full"><label>App image URL</label><input id="image" placeholder="https://...jpg"></div>
+        <div><label>App name</label><input id="name" placeholder="YONO RUMMY"></div>
+        <div><label>App link</label><input id="link" placeholder="https://..."></div>
+      </div>
+      <div class="preview"><img id="previewImg" alt=""><div id="previewInitial" class="initial">IMG</div><div class="previewtext" id="previewText">Image preview</div></div>
+      <div class="btnrow"><button class="btn primary" id="saveApp">Save App</button><button class="btn secondary" id="cancelEdit">New / Cancel</button></div>
+      <div class="status" id="appStatus"></div>
+    </section>
+
+    <section class="card">
+      <h2>4. ALL LIVE APPS (<span id="count">0</span>)</h2>
+      <div class="list" id="appList"></div>
+    </section>
+
+    <section class="card">
+      <h2>5. Live Activity — Add / Edit / Remove</h2>
+      <div class="activity" id="activity"></div>
+    </section>
+
+    <section class="card">
+      <h2>6. Atomic index.html Code</h2>
+      <textarea id="code" class="code" readonly placeholder="Live index.html code will appear here after connection."></textarea>
+      <div class="btnrow"><button class="btn secondary" id="copyCode">Copy Complete index.html</button><button class="btn green" id="downloadCode">Download index.html</button></div>
+      <div class="note">Only the existing <b>appsData</b> array is replaced. The rest of your existing index.html is preserved.</div>
+    </section>
+  </main>
+</div>
+
+<script>
+(function(){
+  const $=id=>document.getElementById(id);
+  const STORE='private_admin_v2_';
+  let apps=[], originalHtml='', currentSha=null, editingId=null, localEvents=[];
+
+  function cleanOwner(v){
+    v=(v||'').trim().replace(/^https?:\\/\\//i,'');
+    let m=v.match(/^([A-Za-z0-9-]+)\\.github\\.io/i); if(m)return m[1];
+    m=v.match(/^(?:www\\.)?github\\.com\\/([A-Za-z0-9-]+)/i); if(m)return m[1];
+    return v.split('/')[0];
+  }
+  function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+  function show(el,msg,type){el.textContent=msg;el.className='status show '+type}
+  function hide(el){el.className='status'}
+  function headers(){return {'Authorization':'Bearer '+$('token').value.trim(),'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'}}
+  function api(path){return 'https://api.github.com/repos/'+encodeURIComponent(cleanOwner($('owner').value))+'/'+encodeURIComponent($('repo').value.trim())+'/contents/'+path.replace(/^\\/+/, '')}
+  function b64dec(s){return decodeURIComponent(escape(atob(s.replace(/\\n/g,''))))}
+  function b64enc(s){return btoa(unescape(encodeURIComponent(s)))}
+
+  ['owner','repo','branch','indexPath'].forEach(id=>{
+    const v=localStorage.getItem(STORE+id); if(v)$(id).value=v;
+  });
+  const savedToken=localStorage.getItem(STORE+'token'); if(savedToken)$('token').value=savedToken;
+
+  $('showToken').onclick=()=>{const t=$('token');t.type=t.type==='password'?'text':'password';$('showToken').textContent=t.type==='password'?'Show':'Hide'};
+
+  $('disconnect').onclick=()=>{
+    ['owner','repo','branch','indexPath','token'].forEach(k=>localStorage.removeItem(STORE+k));
+    $('owner').value='';$('repo').value='';$('branch').value='main';$('indexPath').value='index.html';$('token').value='';
+    $('dashboard').classList.add('locked');hide($('connectStatus'));originalHtml='';apps=[];render();
+  };
+
+  async function getFile(path,ref){
+    const r=await fetch(api(path)+'?ref='+encodeURIComponent(ref),{headers:headers()});
+    if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.message||('GitHub error '+r.status))}
+    return r.json();
+  }
+
+  function parseApps(html){
+    const m=html.match(/(?:const|let|var)\\s+appsData\\s*=\\s*(\\[[\\s\\S]*?\\]);/);
+    if(!m)throw new Error('appsData array was not found in index.html.');
+    try{return Function('"use strict";return ('+m[1]+')')()}catch(e){throw new Error('appsData could not be read from index.html.')}
+  }
+
+  function makeCode(list){
+    const replacement='const appsData = '+JSON.stringify(list,null,4)+';';
+    const re=/(?:const|let|var)\\s+appsData\\s*=\\s*\\[[\\s\\S]*?\\];/;
+    if(!re.test(originalHtml))throw new Error('appsData array was not found.');
+    return originalHtml.replace(re,replacement);
+  }
+
+  function fallbackName(name){return esc((String(name||'APP').match(/[A-Za-z0-9]+/g)||['APP'])[0].slice(0,3).toUpperCase())}
+  function renderList(){
+    $('total').textContent=apps.length;$('count').textContent=apps.length;
+    const list=$('appList');
+    if(!apps.length){list.innerHTML='<div class="note" style="padding:12px">No apps found.</div>';return}
+    list.innerHTML=apps.map(a=>`<div class="item">
+      <div class="thumb fallback" data-img="${esc(a.image)}">${fallbackName(a.name)}</div>
+      <div><div class="name">${esc(a.name)}</div><div class="meta">#${esc(a.id)} • ${esc(a.link)}</div></div>
+      <div class="actions"><button class="edit" data-edit="${esc(a.id)}">Edit App</button><button class="remove" data-remove="${esc(a.id)}">Remove App</button></div>
+    </div>`).join('');
+    list.querySelectorAll('[data-img]').forEach(el=>{
+      const src=el.dataset.img;if(!src)return;
+      const im=new Image();im.onload=()=>{el.classList.remove('fallback');el.innerHTML='';el.appendChild(im);im.className='thumb';im.alt='';};im.src=src;
+    });
+    list.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>startEdit(Number(b.dataset.edit)));
+    list.querySelectorAll('[data-remove]').forEach(b=>b.onclick=()=>removeApp(Number(b.dataset.remove)));
+  }
+
+  function renderActivity(){
+    const a=$('activity');
+    if(!localEvents.length){a.innerHTML='<div class="note">No changes in this admin session yet.</div>';return}
+    a.innerHTML=localEvents.slice().reverse().map(e=>`<div class="event ${esc(e.type)}"><div class="eventtop"><span>${esc(e.type.toUpperCase())}: ${esc(e.name)}</span><span class="eventtime">${esc(e.time)}</span></div><div class="eventbody">${esc(e.detail)}</div></div>`).join('');
+  }
+  function updateStats(){
+    $('added').textContent=localEvents.filter(e=>e.type==='add').length;
+    $('edited').textContent=localEvents.filter(e=>e.type==='edit').length;
+    $('removed').textContent=localEvents.filter(e=>e.type==='remove').length;
+  }
+  function logEvent(type,name,detail){
+    localEvents.push({type,name,detail,time:new Date().toLocaleString()});
+    renderActivity();updateStats();
+  }
+
+  async function loadLive(showMessage=true){
+    const status=$('dataStatus'); if(showMessage)show(status,'Loading live index.html from GitHub…','info');
+    try{
+      const ref=$('branch').value.trim()||'main';
+      const file=await getFile($('indexPath').value.trim()||'index.html',ref);
+      currentSha=file.sha;originalHtml=b64dec(file.content);apps=parseApps(originalHtml);
+      $('dashboard').classList.remove('locked');
+      $('code').value=originalHtml;
+      renderList();
+      updateStats();
+      if(showMessage)show(status,'Live data loaded: '+apps.length+' apps.','ok');
+      await loadGitHubActivity();
+    }catch(e){show(status,e.message,'err')}
+  }
+
+  async function loadGitHubActivity(){
+    try{
+      const path=$('indexPath').value.trim()||'index.html',ref=$('branch').value.trim()||'main';
+      const url='https://api.github.com/repos/'+encodeURIComponent(cleanOwner($('owner').value))+'/'+encodeURIComponent($('repo').value.trim())+'/commits?path='+encodeURIComponent(path)+'&sha='+encodeURIComponent(ref)+'&per_page=30';
+      const r=await fetch(url,{headers:headers()});if(!r.ok)return;
+      const data=await r.json();
+      const remote=data.map(c=>{
+        const msg=(c.commit&&c.commit.message||'').split('\\n')[0];
+        let type=/^Add app:/i.test(msg)?'add':/^Remove app:/i.test(msg)?'remove':/^Update app:/i.test(msg)?'edit':'edit';
+        return {type,name:msg.replace(/^(Add|Remove|Update) app:\\s*/i,''),detail:'GitHub live commit: '+msg,time:c.commit&&c.commit.author&&c.commit.author.date?new Date(c.commit.author.date).toLocaleString():'recent'};
+      }).filter(e=>/^(add|remove|update) app:/i.test(e.detail.replace('GitHub live commit: ','')));
+      if(remote.length){
+        const box=$('activity');
+        const remoteHtml=remote.map(e=>`<div class="event ${esc(e.type)}"><div class="eventtop"><span>${esc(e.type.toUpperCase())}: ${esc(e.name)}</span><span class="eventtime">${esc(e.time)}</span></div><div class="eventbody">${esc(e.detail)}</div></div>`).join('');
+        const localHtml=localEvents.slice().reverse().map(e=>`<div class="event ${esc(e.type)}"><div class="eventtop"><span>${esc(e.type.toUpperCase())}: ${esc(e.name)}</span><span class="eventtime">${esc(e.time)}</span></div><div class="eventbody">${esc(e.detail)}</div></div>`).join('');
+        box.innerHTML=localHtml+remoteHtml;
+      } else renderActivity();
+    }catch(_){}
+  }
+
+  async function connect(){
+    const status=$('connectStatus');
+    const owner=cleanOwner($('owner').value),repo=$('repo').value.trim(),token=$('token').value.trim(),branch=$('branch').value.trim()||'main';
+    if(!owner||!repo||!token){show(status,'GitHub username, repository name and GITHUB_TOKEN are required.','err');return}
+    $('owner').value=owner;$('branch').value=branch;
+    try{
+      show(status,'Checking GitHub username, repository and token…','info');
+      const me=await fetch('https://api.github.com/user',{headers:headers()});
+      if(!me.ok)throw new Error('GITHUB_TOKEN rejected by GitHub. Check the token and its permissions.');
+      const repoRes=await fetch('https://api.github.com/repos/'+encodeURIComponent(owner)+'/'+encodeURIComponent(repo),{headers:headers()});
+      if(!repoRes.ok)throw new Error('Repository not found or token has no access. Check username/repository.');
+      ['owner','repo','branch','indexPath'].forEach(id=>localStorage.setItem(STORE+id,$(id).value.trim()));
+      localStorage.setItem(STORE+'token',token);
+      localStorage.setItem(STORE+'connected','1');
+      $('dashboard').classList.remove('locked');
+      show(status,'Connected successfully. Loading ALL live apps…','ok');
+      await loadLive(true);
+      // Keep the complete atomic index.html visible after connection.
+      if (originalHtml) $('code').value = originalHtml;
+    }catch(e){show(status,e.message,'err');$('dashboard').classList.add('locked')}
+  }
+
+  async function saveToGitHub(list,message){
+    const path=$('indexPath').value.trim()||'index.html',branch=$('branch').value.trim()||'main';
+    const latest=await getFile(path,branch);
+    const latestHtml=b64dec(latest.content);
+    const re=/(?:const|let|var)\\s+appsData\\s*=\\s*\\[[\\s\\S]*?\\];/;
+    if(!re.test(latestHtml))throw new Error('Live index.html does not contain appsData.');
+    const newHtml=latestHtml.replace(re,'const appsData = '+JSON.stringify(list,null,4)+';');
+    const body={message,content:b64enc(newHtml),branch};
+    body.sha=latest.sha;
+    const r=await fetch(api(path),{method:'PUT',headers:{...headers(),'Content-Type':'application/json'},body:JSON.stringify(body)});
+    if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.message||('GitHub error '+r.status))}
+    const out=await r.json();currentSha=out.content&&out.content.sha||null;originalHtml=newHtml;apps=list;return out;
+  }
+
+  function startEdit(id){
+    const a=apps.find(x=>Number(x.id)===id);if(!a)return;
+    editingId=id;$('formTitle').textContent='3. Edit App #'+id;$('image').value=a.image||'';$('name').value=a.name||'';$('link').value=a.link||'';$('saveApp').textContent='Save Edit';updatePreview();window.scrollTo({top:$('connectCard').offsetHeight+20,behavior:'smooth'});
+  }
+  function clearForm(){editingId=null;$('formTitle').textContent='3. Add App';$('image').value='';$('name').value='';$('link').value='';$('saveApp').textContent='Save App';updatePreview();hide($('appStatus'))}
+  function updatePreview(){
+    const src=$('image').value.trim(),img=$('previewImg'),init=$('previewInitial');
+    $('previewText').textContent=$('name').value.trim()||'Image preview';
+    init.textContent=((($('name').value.trim()||'IMG').match(/[A-Za-z0-9]+/g)||['IMG'])[0]).slice(0,3).toUpperCase();
+    img.style.display='none';init.style.display='flex';
+    if(/^https?:\\/\\//i.test(src)){const test=new Image();test.onload=()=>{img.src=src;img.style.display='block';init.style.display='none'};test.onerror=()=>{};test.src=src}
+  }
+  $('image').oninput=updatePreview;$('name').oninput=updatePreview;
+
+  async function saveApp(){
+    const status=$('appStatus'),image=$('image').value.trim(),name=$('name').value.trim(),link=$('link').value.trim();
+    if(!/^https?:\\/\\//i.test(image)||!name||!/^https?:\\/\\//i.test(link)){show(status,'Please enter a valid Image URL, App name and App link.','err');return}
+    const old=[...apps];
+    try{
+      let next=[...apps],msg='',type='',detail='';
+      if(editingId!==null){
+        const i=next.findIndex(a=>Number(a.id)===editingId);if(i<0)throw new Error('App not found.');
+        const before=next[i];next[i]={...before,name,image,link};msg='Update app: '+name;type='edit';detail='Changed app image/name/link. Previous name: '+before.name;
+      }else{
+        const nextId=next.length?Math.max(...next.map(a=>Number(a.id)||0))+1:1;
+        next.push({id:nextId,name,image,link});msg='Add app: '+name;type='add';detail='New app added with image, name and link. ID #'+nextId;
+      }
+      $('saveApp').disabled=true;show(status,'Saving change to live GitHub index.html…','info');
+      await saveToGitHub(next,msg);
+      $('code').value=originalHtml;renderList();logEvent(type,name,detail);clearForm();show(status,type==='add'?'App added successfully and live commit created.':'App edited successfully and live commit created.','ok');
+      await loadGitHubActivity();
+    }catch(e){apps=old;renderList();show(status,e.message,'err')}
+    $('saveApp').disabled=false;
+  }
+
+  async function removeApp(id){
+    const a=apps.find(x=>Number(x.id)===id);if(!a)return;
+    if(!confirm('Remove "'+a.name+'" from the live website?'))return;
+    const old=[...apps],next=apps.filter(x=>Number(x.id)!==id);
+    try{
+      show($('appStatus'),'Removing app from live GitHub index.html…','info');
+      await saveToGitHub(next,'Remove app: '+a.name);
+      $('code').value=originalHtml;renderList();logEvent('remove',a.name,'Removed from live appsData. App ID #'+id+'.');show($('appStatus'),'App removed successfully and live commit created.','ok');await loadGitHubActivity();
+    }catch(e){apps=old;renderList();show($('appStatus'),e.message,'err')}
+  }
+
+  $('connect').onclick=connect;$('refresh').onclick=()=>loadLive(true);$('saveApp').onclick=saveApp;$('cancelEdit').onclick=clearForm;
+  $('copyCode').onclick=async()=>{if(!$('code').value)return;try{await navigator.clipboard.writeText($('code').value);show($('dataStatus'),'Complete index.html copied.','ok')}catch(e){show($('dataStatus'),'Copy failed. Use Download index.html.','err')}};
+  $('downloadCode').onclick=()=>{if(!$('code').value)return;const b=new Blob([$('code').value],{type:'text/html;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='index.html';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
+
+  // Auto-connect using saved browser-only settings.
+  if($('owner').value&&$('repo').value&&$('token').value){connect()}else{renderList();renderActivity()}
+})();
+</script>
+</body>
+</html>
